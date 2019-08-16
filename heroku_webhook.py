@@ -28,10 +28,10 @@ def makeResponse(req):
     result = req.get("queryResult")
     parameters = result.get("parameters")
     city = parameters.get("geo-city")
-    console.log("City value: "+city)
+    print("City value: ", city)
     date_value = parameters.get("date")
     date = date_value.split('T')[0]
-    console.log("Date value: "+date)
+    print("Date value: ", date)
     if city is None:
         return None
     r=requests.get('http://api.openweathermap.org/data/2.5/forecast?q='+city+'&appid=06f070197b1f60e55231f8c46658d077')
