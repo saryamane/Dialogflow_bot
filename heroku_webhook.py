@@ -20,7 +20,6 @@ def webhook():
         res = makeProductSku(req)
     else:
         res = makeResponse(req)
-#     res = makeProductSku(req)
     
     res = json.dumps(res, indent=4)
     # print(res)
@@ -29,8 +28,30 @@ def webhook():
     return r
 
 def makeProductSku(req):
+    result = req.get("queryResult")
+    parameters = result.get("parameters")
+    cloud_name = parameters.get("crm-product-name")
+    edition_name = parameters.get("crm-edition-name")
+    if cloud_name == 'Sales Cloud' and edition_name == 'Professional':
+        sku_code = '200012628'
+    elif cloud_name == 'Sales Cloud' and edition_name == 'Unlimited':
+        sku_code = '200012632'
+    elif cloud_name == 'Sales Cloud' and edition_name == 'Enterprise':
+        sku_code = '200012625'
+    elif cloud_name == 'Service Cloud' and edition_name == 'Professional':
+        sku_code = '200012640'
+    elif cloud_name == 'Service Cloud' and edition_name == 'Unlimited':
+        sku_code = '200012643'
+    elif cloud_name == 'Service Cloud' and edition_name == 'Enterprise':
+        sku_code = '200012637'
+    elif cloud_name == 'Force.com' and edition_name == 'Professional':
+        sku_code = 'No product sku available'
+    elif cloud_name == 'Force.com' and edition_name == 'Unlimited':
+        sku_code = '200000441'
+    elif cloud_name == 'Force.com' and edition_name == 'Enterprise':
+        sku_code = '200000133'
     return {
-    "fulfillment_text": 'Hello from Heroku',
+    "fulfillment_text": sku_code,
     "webhook_source": "heroku-prodsku-webhook"
     }
 
