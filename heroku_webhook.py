@@ -13,14 +13,25 @@ app = Flask(__name__)
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(json.dumps(req, indent=4))
-    
-    res = makeResponse(req)
+    result = req.get("queryResult")
+    action_value = result.get("action")
+    print('Identified action value is', action_value)
+    if action_value == 'getProductSkuMap':
+        res = makeProductSku(req)
+    else:
+        res = makeResponse(req)
     
     res = json.dumps(res, indent=4)
     # print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
+def makeProductSku(req):
+    return {
+    "fulfillment_text": 'Hello from Heroku'
+    "webhook_source": "heroku-prodsku-webhook"
+    }
 
 def makeResponse(req):
 #     if req.get("intent").get("displayName") != "CheckWeather":
@@ -52,15 +63,3 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     print("Starting app on port %d" % port)
     app.run(debug=False, port=port, host='0.0.0.0')
-
-
-
-
-
-
-
-
-
-
-
-
