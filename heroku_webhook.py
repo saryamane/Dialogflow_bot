@@ -13,13 +13,14 @@ app = Flask(__name__)
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(json.dumps(req, indent=4))
-    result = req.get("queryResult")
-    action_value = result.get("action")
-    print('Identified action value is', action_value)
-    if action_value == 'getProductSkuMap':
-        res = makeProductSku(req)
-    else:
-        res = makeResponse(req)
+#     result = req.get("queryResult")
+#     action_value = result.get("action")
+#     print('Identified action value is', action_value)
+#     if action_value == 'getProductSkuMap':
+#         res = makeProductSku(req)
+#     else:
+#     res = makeResponse(req)
+    res = makeProductSku(req)
     
     res = json.dumps(res, indent=4)
     # print(res)
@@ -34,8 +35,6 @@ def makeProductSku(req):
     }
 
 def makeResponse(req):
-#     if req.get("intent").get("displayName") != "CheckWeather":
-#         return {}
     result = req.get("queryResult")
     parameters = result.get("parameters")
     city = parameters.get("geo-city")
