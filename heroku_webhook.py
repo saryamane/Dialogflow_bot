@@ -30,7 +30,8 @@ def makeResponse(req):
     city = parameters.get("geo-city")
     print("City value: ", city)
     date_value = parameters.get("date")
-    date = date_value.split('T')[0]
+    if date_value is not None: 
+        date = date_value.split('T')[0]
     print("Date value: ", date)
     if city is None:
         return None
