@@ -45,7 +45,7 @@ def makeRedditResponse(req):
         r = requests.get('https://www.reddit.com/r/todayILearned/top.json?sort=top&t=day', headers = {'User-agent': 'myBot1.0'})
         json_object = r.json()
         print('JSON object is: ', json_object)
-        if json_object['error'] == 429:
+        if 'error' in json_object:
             return {
             "fulfillment_text": "Sorry, server is busy right now",
             "webhook_source": "reddit-til-subreddit"
@@ -63,7 +63,7 @@ def makeRedditResponse(req):
         r = requests.get('https://www.reddit.com/r/jokes/top.json?sort=top&t=day',headers = {'User-agent': 'myBot1.0'})
         json_object = r.json()
         print("JSON object is: ", json_object)
-        if json_object['error'] == 429:
+        if 'error' in json_object:
             return {
             "fulfillment_text": "Sorry, server is busy right now",
             "webhook_source": "reddit-joke-subreddit"
