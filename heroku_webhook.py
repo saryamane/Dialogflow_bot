@@ -44,6 +44,7 @@ def makeRedditResponse(req):
         # invoke the Reddit api to parse the JSON for TIL
         r = requests.get('https://www.reddit.com/r/todayILearned/top.json?sort=top&t=day')
         json_object = r.json()
+        print('JSON object is: ', json_object)
         til_data = json_object['data']['children']
         til_content = til_data[i_rand]['data']['title']
 
