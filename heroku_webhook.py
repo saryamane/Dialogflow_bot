@@ -13,7 +13,7 @@ app = Flask(__name__)
 @app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
-    print(json.dumps(req, indent=4))
+    # print(json.dumps(req, indent=4))
     result = req.get("queryResult")
     action_value = result.get("action")
     print('Identified action value is', action_value)
@@ -44,7 +44,7 @@ def makeRedditResponse(req):
         # invoke the Reddit api to parse the JSON for TIL
         r = requests.get('https://www.reddit.com/r/todayILearned/top.json?sort=top&t=day', headers = {'User-agent': 'myBot1.0'})
         json_object = r.json()
-        print('JSON object is: ', json_object)
+        # print('JSON object is: ', json_object)
         if 'error' in json_object:
             return {
             "fulfillment_text": "Sorry, server is busy right now",
@@ -62,7 +62,7 @@ def makeRedditResponse(req):
         # TODO invoke the Reddit api for parsing the joke JSON.
         r = requests.get('https://www.reddit.com/r/jokes/top.json?sort=top&t=day',headers = {'User-agent': 'myBot1.0'})
         json_object = r.json()
-        print("JSON object is: ", json_object)
+        # print("JSON object is: ", json_object)
         if 'error' in json_object:
             return {
             "fulfillment_text": "Sorry, server is busy right now",
