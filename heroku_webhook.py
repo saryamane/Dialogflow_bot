@@ -40,14 +40,14 @@ def makeRedditResponse(req):
     if content_type is None:
         return None
 
-     if content_type == 'fact':
+    if content_type == 'fact':
         # invoke the Reddit api to parse the JSON for TIL
         r = requests.get('https://www.reddit.com/r/todayILearned/top.json?sort=top&t=day')
         json_object = r.json()
         til_data = json_object['data']['children']
         til_content = til_data[i_rand]['data']['title']
 
-         return {
+        return {
             "fulfillment_text": til_content,
             "webhook_source": "reddit-til-subreddit"
         }
@@ -58,7 +58,7 @@ def makeRedditResponse(req):
         joke_data = json_object['data']['children']
         joke_content = joke_data[i_rand]['data']['selftext']
 
-         return {
+        return {
             "fulfillment_text": joke_content,
             "webhook_source": "reddit-joke-subreddit"
         }
