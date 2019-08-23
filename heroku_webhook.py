@@ -55,6 +55,7 @@ def makeRedditResponse(req):
         # TODO invoke the Reddit api for parsing the joke JSON.
         r = requests.get('https://www.reddit.com/r/jokes/top.json?sort=top&t=day')
         json_object = r.json()
+        print("JSON object is: ", json_object)
         joke_data = json_object['data']['children']
         joke_content = joke_data[i_rand]['data']['selftext']
 
