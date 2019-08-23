@@ -42,28 +42,40 @@ def makeRedditResponse(req):
 
     if content_type == 'fact':
         # invoke the Reddit api to parse the JSON for TIL
-        r = requests.get('https://www.reddit.com/r/todayILearned/top.json?sort=top&t=day')
+        r = requests.get('https://www.reddit.com/r/todayILearned/top.json?sort=top&t=day', headers = {'User-agent': 'myBot1.0'})
         json_object = r.json()
         print('JSON object is: ', json_object)
-        til_data = json_object['data']['children']
-        til_content = til_data[i_rand]['data']['title']
-
-        return {
-            "fulfillment_text": til_content,
+        if json_object['error'] == 429:
+            return {
+            "fulfillment_text": "Sorry, server is busy right now",
             "webhook_source": "reddit-til-subreddit"
-        }
+            }
+        else:
+            til_data = json_object['data']['children']
+            til_content = til_data[i_rand]['data']['title']
+
+            return {
+                "fulfillment_text": til_content,
+                "webhook_source": "reddit-til-subreddit"
+            }
     elif content_type == 'joke':
         # TODO invoke the Reddit api for parsing the joke JSON.
-        r = requests.get('https://www.reddit.com/r/jokes/top.json?sort=top&t=day')
+        r = requests.get('https://www.reddit.com/r/jokes/top.json?sort=top&t=day',headers = {'User-agent': 'myBot1.0'})
         json_object = r.json()
         print("JSON object is: ", json_object)
-        joke_data = json_object['data']['children']
-        joke_content = joke_data[i_rand]['data']['selftext']
-
-        return {
-            "fulfillment_text": joke_content,
+        if json_object['error'] == 429:
+            return {
+            "fulfillment_text": "Sorry, server is busy right now",
             "webhook_source": "reddit-joke-subreddit"
-        }
+            }
+        else:
+            joke_data = json_object['data']['children']
+            joke_content = joke_data[i_rand]['data']['selftext']
+
+            return {
+                "fulfillment_text": joke_content,
+                "webhook_source": "reddit-joke-subreddit"
+            }
 
 def makeProductSku(req):
     result = req.get("queryResult")
